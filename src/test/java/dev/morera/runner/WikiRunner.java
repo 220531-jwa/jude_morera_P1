@@ -18,7 +18,7 @@ import io.cucumber.junit.CucumberOptions;
 
 //glue code is concrete logic to allow the test to execute selenium based off feature
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "/Proj1Mk1/src/test/resources/WikiLang2.feature", glue = "/Proj1Mk1/src/test/java/dev/morera/steps/WikiImpliThingy.java")
+@CucumberOptions(features = {"src/test/resources/"}, glue = {"dev/morera/steps/WikiImpliThingy.java"})
 public class WikiRunner {
 	//need driver and instance of WikiPage POM
 	public static WebDriver driver;
