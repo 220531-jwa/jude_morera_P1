@@ -1,6 +1,6 @@
 package dev.morera.models;
 
-public class employee {
+public class Employee {
 
 	private int e_id;
 	private boolean fin_man;
@@ -8,11 +8,11 @@ public class employee {
 	private String pword;
 	private String name;
 
-	public employee() {
+	public Employee() {
 		super();
 	}
 
-	public employee(int e_id, boolean fin_man, String uname, String pword, String name) {
+	public Employee(int e_id, boolean fin_man, String uname, String pword, String name) {
 		super();
 		this.e_id = e_id;
 		this.fin_man = fin_man;
