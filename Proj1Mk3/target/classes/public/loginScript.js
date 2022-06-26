@@ -14,7 +14,7 @@ async function login(){
         uname: uname,
         pword: pword
     }
-    console.log(user);
+    // console.log(user);
     
     // FETCH API CAN SEND REQUESTS TOO!
     // await fetch (url, {method : 'POST', mode : 'no idea', ...})
@@ -22,7 +22,7 @@ async function login(){
     //rememba: fetch returns promise
     
     let userJson = JSON.stringify(user); //turn it into a string that can be java'ed
-    console.log(userJson);
+    //console.log(userJson);
     
     let res = await fetch(
         `${baseUrl}/login`, 
@@ -37,6 +37,7 @@ async function login(){
         .then((resp)=>{
             
             console.log(resp);
+            window.location.assign("Employeehomepage.html");
             // window.location.assign("homepage.html");
         }) 
         //^ where we will put needed DOM manip

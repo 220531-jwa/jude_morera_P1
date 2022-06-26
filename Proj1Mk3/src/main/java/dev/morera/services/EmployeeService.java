@@ -13,7 +13,7 @@ public class EmployeeService {
 
 	public Employee login(String uname, String pword) {
 		
-		Employee e = employeeDAO.getClientByUsername(uname);
+		Employee e = employeeDAO.getUserByUsername(uname);
 		
 		if (e.getPword().equals(pword)) {
 			return e;

@@ -11,7 +11,7 @@ public class EmployeeDAO {
 
 	private static  ConnectionUtility cu = ConnectionUtility.getConnectionUtility();
 
-	public Employee getClientByUsername(String uname) {
+	public Employee getUserByUsername(String uname) {
 
 		String sql = "select * from project1.employees where uname = ?";
 

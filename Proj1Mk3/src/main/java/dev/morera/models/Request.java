@@ -1,5 +1,6 @@
 package dev.morera.models;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Request {
@@ -12,7 +13,7 @@ public class Request {
 	private int grading_scheme;
 	private double cost;
 	private double passing_grade;
-	private LocalDateTime datetime; //not sure about this type
+	private Timestamp datetime; //not sure about this type
 	private String location;
 	private String description;
 	private String justification;
@@ -22,7 +23,7 @@ public class Request {
 	}
 
 	public Request(int req_id, String requester, String manager, boolean is_done, double grade, int grading_scheme,
-			double cost, double passing_grade, LocalDateTime datetime, String location, String description,
+			double cost, double passing_grade, Timestamp datetime, String location, String description,
 			String justification) {
 		super();
 		this.req_id = req_id;
@@ -38,6 +39,25 @@ public class Request {
 		this.description = description;
 		this.justification = justification;
 	}
+	//bad constructor for testing
+	public Request(int req_id, int requester, int manager, boolean is_done, double grade, int grading_scheme,
+			double cost, double passing_grade, Timestamp datetime, String location, String description,
+			String justification) {
+		super();
+		this.req_id = req_id;
+		this.requester = Integer.toString(requester);
+		this.manager = Integer.toString(manager);
+		this.is_done = is_done;
+		this.grade = grade;
+		this.grading_scheme = grading_scheme;
+		this.cost = cost;
+		this.passing_grade = passing_grade;
+		this.datetime = datetime;
+		this.location = location;
+		this.description = description;
+		this.justification = justification;
+	}
+	
 
 	public int getReq_id() {
 		return req_id;
@@ -103,11 +123,11 @@ public class Request {
 		this.passing_grade = passing_grade;
 	}
 
-	public LocalDateTime getDatetime() {
+	public Timestamp getDatetime() {
 		return datetime;
 	}
 
-	public void setDatetime(LocalDateTime datetime) {
+	public void setDatetime(Timestamp datetime) {
 		this.datetime = datetime;
 	}
 
