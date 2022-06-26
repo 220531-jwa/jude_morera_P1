@@ -11,17 +11,19 @@ import dev.morera.utils.ConnectionUtility;
 
 public class RequestDAO {
 
+	//static?
+	private   ConnectionUtility cu = ConnectionUtility.getConnectionUtility();
 	
-	private static  ConnectionUtility cu = ConnectionUtility.getConnectionUtility();
-	
-	public List<Request> getRequestsByUser(String uname) {
+	public List<Request> getRequestsByUserID(int id) {
 		
-		String sql = "select * from project1.requests where uname = ?";
+		String sql = "select * from project1.requests where requester = ?";
 		
 		try (Connection conn = cu.getConnection()){
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1,id);
 			
 			ResultSet rs = ps.executeQuery();
+			
 			
 			List<Request> reqs = new ArrayList<>();
 //			public Request(int req_id, String requester, String manager, boolean is_done, double grade, int grading_scheme,
@@ -60,6 +62,9 @@ public class RequestDAO {
 						cost, passing_grade, datetime, location, description, justification);
 				
 				reqs.add(re);
+			}
+			for (Request r: reqs) {
+				System.out.println(r);
 			}
 			return reqs;
 			

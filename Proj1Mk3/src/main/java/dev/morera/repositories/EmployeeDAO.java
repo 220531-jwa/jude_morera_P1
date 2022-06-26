@@ -9,7 +9,8 @@ import dev.morera.utils.ConnectionUtility;
 
 public class EmployeeDAO {
 
-	private static  ConnectionUtility cu = ConnectionUtility.getConnectionUtility();
+	//static?
+	private   ConnectionUtility cu = ConnectionUtility.getConnectionUtility();
 
 	public Employee getUserByUsername(String uname) {
 

@@ -1,4 +1,7 @@
 let baseUrl = "http://localhost:8081"; //might have to change port
+
+currentUser = "";
+
 async function login(){
     // console.log("YEAAH BABY WOO HOO THAT'S WHAT LIKE TO SEE!!!")
     
@@ -30,14 +33,16 @@ async function login(){
             method: 'POST',
             header: {'Content-Type': 'application/json'},
             body: userJson
-        }); //the {contains object}
+        }) //the {contains object}
         
         let resJson = await res.json() 
         //notice: no semicolon yet
         .then((resp)=>{
             
             console.log(resp);
+            currentUser = resp.name;
             window.location.assign("Employeehomepage.html");
+            console.log(currentUser);
             // window.location.assign("homepage.html");
         }) 
         //^ where we will put needed DOM manip
@@ -45,4 +50,10 @@ async function login(){
         
         .catch((error)=>{console.log(error);});
         
+    }
+
+   function ChangeName(currentUser){
+       // let newName = currentUser;
+        let namea = document.getElementById("name");
+        namea.innerText = (`Hello ${currentUser}!`);
     }

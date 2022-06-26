@@ -155,6 +155,14 @@ public class Request {
 		this.justification = justification;
 	}
 
+	@Override
+	public String toString() {
+		return "Request [req_id=" + req_id + ", requester=" + requester + ", manager=" + manager + ", is_done="
+				+ is_done + ", grade=" + grade + ", grading_scheme=" + grading_scheme + ", cost=" + cost
+				+ ", passing_grade=" + passing_grade + ", datetime=" + datetime + ", location=" + location
+				+ ", description=" + description + ", justification=" + justification + "]";
+	}
+
 	
 
 	
