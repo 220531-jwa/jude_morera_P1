@@ -17,17 +17,20 @@ public class RequestService {
 	
 	private static EmployeeDAO edao = new EmployeeDAO();
 	
-	public List<Request> getRequestsByUser (String action){
+	public List<Request> getRequestsByUser (Employee loggedIn){
 		
-		if (action == null) {
+		if (loggedIn == null) {
 			return null;
 		}
-		action = action.replaceAll("[{}\"\r\n ]", "");
-		String[] splited = action.split(":");
-		Employee x = edao.getUserByUsername(splited[1]);
+//		action = action.replaceAll("[{}\"\r\n ]", "");
+		//String[] splited = action.split(":");
+		
+		
+		
+		Employee x = edao.getUserByUsername(loggedIn.getUname());
 		
 		if (x != null) {
-			List<Request> reqs = requestDAO.getRequestsByUserID(x.getE_id());
+			List<Request> reqs = requestDAO.getRequestsByUser(x.getE_id());
 			
 			
 			

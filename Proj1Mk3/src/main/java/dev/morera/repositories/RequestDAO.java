@@ -14,7 +14,7 @@ public class RequestDAO {
 	//static?
 	private   ConnectionUtility cu = ConnectionUtility.getConnectionUtility();
 	
-	public List<Request> getRequestsByUserID(int id) {
+	public List<Request> getRequestsByUser(int id) {
 		
 		String sql = "select * from project1.requests where requester = ?";
 		

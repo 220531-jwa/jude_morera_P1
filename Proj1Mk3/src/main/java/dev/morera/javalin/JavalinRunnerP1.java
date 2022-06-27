@@ -21,17 +21,17 @@ public class JavalinRunnerP1 {
 		RequestController rc = new RequestController(new RequestService(new RequestDAO()));
 				Javalin app = Javalin.create(config -> {
 		config.enableCorsForAllOrigins();
-//			config.enableCorsForOrigin("http://localhost:8081");
-//			config.addStaticFiles("/public", Location.CLASSPATH);
+	//	config.enableCorsForOrigin("http://localhost:8081");
+	//	config.addStaticFiles("/public", Location.CLASSPATH);
 		});
 		app.start(8081);
 
 		app.routes(()->{
 			path("/login", () ->{
-				post(ec::loginEmployee);
+				put(ec::loginEmployee);
 			});
 			path("/requests", ()->{
-				get(rc::getRequests);
+				post(rc::getRequests);
 			});
 		});
 	}
