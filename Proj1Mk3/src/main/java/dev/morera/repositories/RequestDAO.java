@@ -26,29 +26,14 @@ public class RequestDAO {
 			
 			
 			List<Request> reqs = new ArrayList<>();
-//			public Request(int req_id, String requester, String manager, boolean is_done, double grade, int grading_scheme,
-//					double cost, double passing_grade, LocalDateTime datetime, String location, String description,
-//					String justification) {
-//				super();
-//				this.req_id = req_id;
-//				this.requester = requester;
-//				this.manager = manager;
-//				this.is_done = is_done;
-//				this.grade = grade;
-//				this.grading_scheme = grading_scheme;
-//				this.cost = cost;
-//				this.passing_grade = passing_grade;
-//				this.datetime = datetime;
-//				this.location = location;
-//				this.description = description;
-//				this.justification = justification;
+
 //			}			
 			while (rs.next()) {
 				//todo: change these ids to respcetive names
 				int req_id = rs.getInt("req_id");
 				int requester = rs.getInt("requester");
-				int manager = rs.getInt("manager");
-				boolean is_done = rs.getBoolean("is_done");
+//				int manager = rs.getInt("manager");
+//				boolean is_done = rs.getBoolean("is_done");
 				double grade = rs.getDouble("grade");
 				int grading_scheme = rs.getInt("grading_scheme");
 				double cost = rs.getDouble("cost");
@@ -57,9 +42,10 @@ public class RequestDAO {
 				String location = rs.getString("location");
 				String description = rs.getString("description");
 				String justification = rs.getString("justification");
+				int status = rs.getInt("status");
 				
-				Request re = new Request(req_id, requester, manager, is_done, grade, grading_scheme,
-						cost, passing_grade, datetime, location, description, justification);
+				Request re = new Request(req_id, requester,grade, grading_scheme,
+						cost, passing_grade, datetime, location, description, justification, status);
 				
 				reqs.add(re);
 			}
@@ -79,5 +65,34 @@ public class RequestDAO {
 		
 		return null;
 		
+	}
+
+	public boolean createNewRequest(Request r) {
+		
+		//TODO: default passing_grade??
+		String sql = "insert into project1.requests values( default, ? , 0, ?, ? , ? , ?, ? , ? , ? , default) returning *";
+		
+		try (Connection conn = cu.getConnection()){
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, Integer.parseInt(r.getRequester()));
+			ps.setInt(2, r.getGrading_scheme());
+			ps.setDouble(3, r.getCost());
+			ps.setDouble(4, r.getPassing_grade());
+			ps.setTimestamp(5, r.getDatetime());
+			ps.setString(6, r.getLocation());
+			ps.setString(7, r.getDescription());
+			ps.setString(8, r.getJustification());
+			
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

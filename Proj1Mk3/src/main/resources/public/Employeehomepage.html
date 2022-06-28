@@ -14,18 +14,19 @@
 
 <title>Employee Homepage</title>
 </head>
-<body onload = "ChangeName()", onload="PopulateTable()">
+<body onload = "ChangeNameFront()">
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="Employeehomepage.html">Pending & Complete</a>
 		<a class="navbar-brand" href="RequestForm.html">New</a>
+		<a class="navbar-brand" href="logigPage.html" onclick="logout()">Logout</a>
 
 
 
 	</nav>
 
 	<div>
-		<p id="name" > you have logged in!</p>
+		<p id="name" > you are not logged in!</p>
 
 
 		<table id="TheTable" class="table table-hover">
@@ -33,8 +34,8 @@
 			  <tr>
 				<th scope="col">id</th>
 				<th scope="col">Requester</th>
-				<th scope="col">Manager</th>
-				<th scope="col">done?</th>
+				<!-- <th scope="col">Manager</th>
+				<th scope="col">done?</th> -->
 				<th scope="col">grade</th>
 				<th scope="col">type</th>
 				<th scope="col">cost</th>
@@ -43,6 +44,7 @@
 				<th scope="col">location</th>
 				<th scope="col">description</th>
 				<th scope="col">justification</th>
+				<th scope="col">status</th>
 			  </tr>
 			</thead>
 			<tbody>

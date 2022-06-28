@@ -7,8 +7,8 @@ public class Request {
 
 	private int req_id;
 	private String requester;
-	private String manager;
-	private boolean is_done;
+//	private String manager;
+//	private boolean is_done;
 	private double grade;
 	private int grading_scheme;
 	private double cost;
@@ -17,19 +17,18 @@ public class Request {
 	private String location;
 	private String description;
 	private String justification;
-
+	private int status;
+	
 	public Request() {
 		super();
 	}
 
-	public Request(int req_id, String requester, String manager, boolean is_done, double grade, int grading_scheme,
-			double cost, double passing_grade, Timestamp datetime, String location, String description,
-			String justification) {
+
+	public Request(int req_id, String requester, double grade, int grading_scheme, double cost, double passing_grade,
+			Timestamp datetime, String location, String description, String justification, int status) {
 		super();
 		this.req_id = req_id;
 		this.requester = requester;
-		this.manager = manager;
-		this.is_done = is_done;
 		this.grade = grade;
 		this.grading_scheme = grading_scheme;
 		this.cost = cost;
@@ -38,16 +37,20 @@ public class Request {
 		this.location = location;
 		this.description = description;
 		this.justification = justification;
+		this.status = status;
 	}
+
+
+	
 	//bad constructor for testing
-	public Request(int req_id, int requester, int manager, boolean is_done, double grade, int grading_scheme,
+	public Request(int req_id, int requester, double grade, int grading_scheme,
 			double cost, double passing_grade, Timestamp datetime, String location, String description,
-			String justification) {
+			String justification, int status) {
 		super();
 		this.req_id = req_id;
 		this.requester = Integer.toString(requester);
-		this.manager = Integer.toString(manager);
-		this.is_done = is_done;
+//		this.manager = Integer.toString(manager);
+//		this.is_done = is_done;
 		this.grade = grade;
 		this.grading_scheme = grading_scheme;
 		this.cost = cost;
@@ -56,6 +59,8 @@ public class Request {
 		this.location = location;
 		this.description = description;
 		this.justification = justification;
+		this.status = status;
+		
 	}
 	
 
@@ -75,21 +80,6 @@ public class Request {
 		this.requester = requester;
 	}
 
-	public String getManager() {
-		return manager;
-	}
-
-	public void setManager(String manager) {
-		this.manager = manager;
-	}
-
-	public boolean isIs_done() {
-		return is_done;
-	}
-
-	public void setIs_done(boolean is_done) {
-		this.is_done = is_done;
-	}
 
 	public double getGrade() {
 		return grade;
@@ -155,15 +145,23 @@ public class Request {
 		this.justification = justification;
 	}
 
-	@Override
-	public String toString() {
-		return "Request [req_id=" + req_id + ", requester=" + requester + ", manager=" + manager + ", is_done="
-				+ is_done + ", grade=" + grade + ", grading_scheme=" + grading_scheme + ", cost=" + cost
-				+ ", passing_grade=" + passing_grade + ", datetime=" + datetime + ", location=" + location
-				+ ", description=" + description + ", justification=" + justification + "]";
+	public int getStatus() {
+		return status;
 	}
 
-	
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "Request [req_id=" + req_id + ", requester=" + requester + ", grade=" + grade + ", grading_scheme="
+				+ grading_scheme + ", cost=" + cost + ", passing_grade=" + passing_grade + ", datetime=" + datetime
+				+ ", location=" + location + ", description=" + description + ", justification=" + justification
+				+ ", status=" + status + "]";
+	}
+
+
 
 	
 

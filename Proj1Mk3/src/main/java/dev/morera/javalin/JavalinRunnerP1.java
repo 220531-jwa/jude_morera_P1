@@ -19,19 +19,25 @@ public class JavalinRunnerP1 {
 	public static void main(String[] args) {
 		EmployeeController ec = new EmployeeController(new EmployeeService(new EmployeeDAO()));
 		RequestController rc = new RequestController(new RequestService(new RequestDAO()));
-				Javalin app = Javalin.create(config -> {
-		config.enableCorsForAllOrigins();
-	//	config.enableCorsForOrigin("http://localhost:8081");
-	//	config.addStaticFiles("/public", Location.CLASSPATH);
+		Javalin app = Javalin.create(config -> {
+			config.enableCorsForAllOrigins();
+			//	config.enableCorsForOrigin("http://localhost:8081");
+			config.addStaticFiles("/public", Location.CLASSPATH);
 		});
 		app.start(8081);
 
 		app.routes(()->{
 			path("/login", () ->{
 				put(ec::loginEmployee);
+				path ("/manager" ,()->{
+					put(ec::loginManager);
+				});
 			});
 			path("/requests", ()->{
 				post(rc::getRequests);
+			});
+			path("/newRequest", ()->{
+				post(rc::newRequest);
 			});
 		});
 	}

@@ -22,7 +22,18 @@ public class EmployeeService {
 		return null;
 	}
 	
-	
+	public Employee loginManager(String uname, String pword, boolean fin_man) {
+		
+		Employee pwordCheck = login( uname, pword);
+		if (pwordCheck != null) {
+			if (pwordCheck.isFin_man()) {
+				return pwordCheck;
+			}
+		}
+		
+		return null;
+		
+	}
 	
 	
 	

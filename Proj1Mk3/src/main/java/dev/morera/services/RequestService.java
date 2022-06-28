@@ -10,41 +10,41 @@ import dev.morera.repositories.RequestDAO;
 public class RequestService {
 
 	private static RequestDAO requestDAO;
-	
+
 	public RequestService(RequestDAO rdao) {
 		this.requestDAO = rdao;
 	}
-	
+
 	private static EmployeeDAO edao = new EmployeeDAO();
-	
+
 	public List<Request> getRequestsByUser (Employee loggedIn){
-		
+
 		if (loggedIn == null) {
 			return null;
 		}
-//		action = action.replaceAll("[{}\"\r\n ]", "");
+		//		action = action.replaceAll("[{}\"\r\n ]", "");
 		//String[] splited = action.split(":");
-		
-		
-		
+
+
+
 		Employee x = edao.getUserByUsername(loggedIn.getUname());
-		
+
 		if (x != null) {
 			List<Request> reqs = requestDAO.getRequestsByUser(x.getE_id());
-			
-			
-			
 			return reqs;
 		}
 		return null;
+	}
+
+	public boolean createNewRequest(Request r) {
+		System.out.println(r);
+		return (requestDAO.createNewRequest(r));
 		
 		
-		
-		
-		
-		
-		
+		//return null;
 	}
 	
 	
+
+
 }
