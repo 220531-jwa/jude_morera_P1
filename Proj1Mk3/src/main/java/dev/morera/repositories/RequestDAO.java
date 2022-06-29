@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import dev.morera.models.Grade;
 import dev.morera.models.Request;
 import dev.morera.utils.ConnectionUtility;
 
@@ -14,9 +14,44 @@ public class RequestDAO {
 	//static?
 	private   ConnectionUtility cu = ConnectionUtility.getConnectionUtility();
 	
+	public Request getOneRequest(int inReq_id) {
+		String sql = "select * from project1.requests where req_id = ?";
+		
+		try (Connection conn = cu.getConnection()){
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1,inReq_id);
+			
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				int req_id = rs.getInt("req_id");
+				int requester = rs.getInt("requester");
+
+				double grade = rs.getDouble("grade");
+				int grading_scheme = rs.getInt("grading_scheme");
+				double cost = rs.getDouble("cost");
+				double passing_grade = rs.getDouble("passing_grade");
+				Timestamp datetime = rs.getTimestamp("datetime");
+				String location = rs.getString("location");
+				String description = rs.getString("description");
+				String justification = rs.getString("justification");
+				int status = rs.getInt("status");
+				
+				return new Request(req_id, requester,grade, grading_scheme,
+						cost, passing_grade, datetime, location, description, justification, status);
+				
+			}
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	public List<Request> getRequestsByUser(int id) {
 		
-		String sql = "select * from project1.requests where requester = ?";
+		String sql = "select * from project1.requests where requester = ? order by req_id";
 		
 		try (Connection conn = cu.getConnection()){
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -26,14 +61,12 @@ public class RequestDAO {
 			
 			
 			List<Request> reqs = new ArrayList<>();
-
-//			}			
+		
 			while (rs.next()) {
 				//todo: change these ids to respcetive names
 				int req_id = rs.getInt("req_id");
 				int requester = rs.getInt("requester");
-//				int manager = rs.getInt("manager");
-//				boolean is_done = rs.getBoolean("is_done");
+
 				double grade = rs.getDouble("grade");
 				int grading_scheme = rs.getInt("grading_scheme");
 				double cost = rs.getDouble("cost");
@@ -49,19 +82,13 @@ public class RequestDAO {
 				
 				reqs.add(re);
 			}
-			for (Request r: reqs) {
-				System.out.println(r);
-			}
+
 			return reqs;
 			
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
 		
 		return null;
 		
@@ -90,6 +117,70 @@ public class RequestDAO {
 			}
 			
 		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public List<Request> getAllRequests() {
+		
+		String sql = "select * from project1.requests order by req_id";
+		
+		try (Connection conn = cu.getConnection()){
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			
+			ResultSet rs = ps.executeQuery();
+			
+			
+			List<Request> reqs = new ArrayList<>();
+
+					
+			while (rs.next()) {
+				//todo: change these ids to respcetive names
+				int req_id = rs.getInt("req_id");
+				int requester = rs.getInt("requester");
+
+				double grade = rs.getDouble("grade");
+				int grading_scheme = rs.getInt("grading_scheme");
+				double cost = rs.getDouble("cost");
+				double passing_grade = rs.getDouble("passing_grade");
+				Timestamp datetime = rs.getTimestamp("datetime");
+				String location = rs.getString("location");
+				String description = rs.getString("description");
+				String justification = rs.getString("justification");
+				int status = rs.getInt("status");
+				
+				Request re = new Request(req_id, requester,grade, grading_scheme,
+						cost, passing_grade, datetime, location, description, justification, status);
+				
+				reqs.add(re);
+			}
+			return reqs;
+			
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+
+	public boolean gradeRequest(Grade g) {
+		
+		String sql = "update project1.requests set status = 3, grade = ? where req_id = ?";
+		
+		 try (Connection conn = cu.getConnection()){
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setDouble(1, g.getGrade());
+			ps.setInt(2, g.getReq_id());
+		 
+			return (ps.executeUpdate()==1);
+			
+		 }
 		catch (SQLException e) {
 			e.printStackTrace();
 		}

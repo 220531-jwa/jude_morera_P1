@@ -64,7 +64,7 @@ async function login(){
                 pword: pword,
                 fin_man: mana
             }
-
+            
             
             let userJson = JSON.stringify(user); 
             
@@ -77,11 +77,11 @@ async function login(){
                 }); 
                 
                 let resJson = await res.json() 
-
+                
                 .then((resp)=>{
                     
                     console.log(resp);
-
+                    
                     sessionStorage.setItem('inUser', JSON.stringify(resp));
                     
                     window.location.assign("Managerhomepage.html");
@@ -89,7 +89,7 @@ async function login(){
                     
                     
                     
-                   
+                    
                     
                 }) 
                 //^ where we will put needed DOM manip
@@ -192,9 +192,11 @@ async function login(){
                 
             }
             
+            
+            
             async function PopulateTable(){
-                let foundUser = (sessionStorage.getItem('inUser')); //no prase here, we need to pass string to java
-                // console.log(foundUser.uname);
+                let foundUser = (sessionStorage.getItem('inUser')); 
+                
                 let res = await fetch(`
                 ${baseUrl}/requests`,
                 {
@@ -212,6 +214,91 @@ async function login(){
                     // console.log(test); not needed, already an object
                     
                     var table = document.getElementById("TheTable");
+                    var selector = document.getElementById('idSelector');
+                    for (const entry of resp){
+                        
+                        var row = table.insertRow(-1);
+                        
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+                        var cell4 = row.insertCell(3);
+                        var cell5 = row.insertCell(4);
+                        var cell6 = row.insertCell(5);
+                        var cell7 = row.insertCell(6);
+                        var cell8 = row.insertCell(7);
+                        var cell9 = row.insertCell(8);
+                        var cell10 = row. insertCell(9);
+                        var cell11 = row.insertCell(10);
+                        var cell12 = row.insertCell(11);
+                        
+                        
+                        //     id</th>
+                        //     Requester</th>
+                        
+                        //     grade</th>
+                        //     type</th>
+                        //     passing grade</th>
+                        //     date & time of event</th>
+                        //     location</th>
+                        //     description</th>
+                        //     justification</th>
+                        //     status
+                        
+                        
+                        cell1.innerText = entry.req_id;
+                        cell2.innerText = entry.requester;
+                        // cell3.innerText = entry.manager;
+                        // cell4.innerText = entry.is_done;
+                        cell3.innerText = entry.grade;
+                        cell4.innerText = SetType(entry.grading_scheme);
+                        cell5.innerText = entry.cost;
+                        cell6.innerText = entry.passing_grade;
+                        cell7.innerText = new Date(entry.datetime);
+                        //let reimbSubmitted = new Date().toISOString().slice(0, 10);
+                        
+                        cell8.innerText = entry.location;
+                        cell9.innerText = entry.description;
+                        cell10.innerText = entry.justification;
+                        cell11.innerText = entry.status;
+                        
+                        if (entry.status == 1){
+                            let newB = document.createElement('option');
+                            newB.setAttribute("value",entry.req_id);
+                            newB.innerText = entry.req_id;
+                            selector.appendChild(newB);
+                        }
+                        
+                        
+                    }
+                    
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+                
+            }
+            
+            async function PopulateTableManagerial(){
+                let foundUser = (sessionStorage.getItem('inUser')); 
+                
+                let res = await fetch(`
+                ${baseUrl}/requests/manager`,
+                {
+                    method: 'POST',
+                    header: {'Content-Type': 'application/json'},
+                    body: foundUser
+                    
+                }
+                );
+                let resJson = await res.json()
+                
+                .then((resp) =>{
+                    console.log(resp);
+                    // let test = JSON.stringify(resp);
+                    // console.log(test); not needed, already an object
+                    
+                    var table = document.getElementById("TheManagerTable");
                     
                     for (const entry of resp){
                         
@@ -249,7 +336,10 @@ async function login(){
                         // cell3.innerText = entry.manager;
                         // cell4.innerText = entry.is_done;
                         cell3.innerText = entry.grade;
-                        cell4.innerText = entry.grading_scheme
+                        cell4.innerText = SetType(entry.grading_scheme);
+                        
+                        
+                        
                         cell5.innerText = entry.cost;
                         cell6.innerText = entry.passing_grade;
                         cell7.innerText = new Date(entry.datetime);
@@ -268,9 +358,84 @@ async function login(){
                 .catch((error) => {
                     console.log(error);
                 });
-                
+            }  
+            
+            function SetType(num){
+                let word = 'other';
+                switch (num){
+                    case 0: word = 'invalid';
+                    break;
+                    case 1: word = 'University Course';
+                    break;
+                    case 2: word = 'Seminar';
+                    break;
+                    case 3: word = 'Certification Prep. Class';
+                    break;
+                    case 4: word = 'Certification';
+                    break;
+                    case 5: word = 'Technical Training';
+                    break;
+                    default: break;
+                }
+                return word;
             }
+            
+            function ChangeNameMan(){
+                
+                let namea = document.getElementById("name");
+                let foundUser = JSON.parse(sessionStorage.getItem('inUser'));
+                namea.innerText = (`Hello ${foundUser.name}!`);
+                
+                PopulateTableManagerial();
+            }
+            
             
             function logout(){
                 sessionStorage.clear();
             }
+            
+            
+            
+            async function ChangeGrade(){
+                
+                let selector = document.getElementById('idSelector');
+                let grador = document.getElementById('newGrade');
+                
+                let idChanged = selector.options[selector.selectedIndex].value;
+                let gradeChanged = (grador.value/100); 
+                
+                let grad = {
+                    req_id :idChanged,
+                    grade: gradeChanged
+                }
+
+                let gradString = JSON.stringify(grad);
+                console.log(gradString);
+                
+                
+                
+                let res = await fetch(`
+                ${baseUrl}/requests`,
+                {
+                    method: 'PATCH',
+                    header: {'Content-Type': 'application/json'},
+                    body: gradString
+                    
+                }
+                );
+                let resJson = await res.json()
+                
+                .then(()=>{
+                    
+                    console.log("nice");
+                    
+                }) 
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
+            // let user = {
+            //     uname: uname,
+            //     pword: pword,
+            //     // fin_man: mana
+            // }

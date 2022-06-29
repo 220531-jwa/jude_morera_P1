@@ -3,6 +3,7 @@ package dev.morera.services;
 import java.util.List;
 
 import dev.morera.models.Employee;
+import dev.morera.models.Grade;
 import dev.morera.models.Request;
 import dev.morera.repositories.EmployeeDAO;
 import dev.morera.repositories.RequestDAO;
@@ -39,12 +40,40 @@ public class RequestService {
 	public boolean createNewRequest(Request r) {
 		System.out.println(r);
 		return (requestDAO.createNewRequest(r));
-		
-		
+
+
 		//return null;
 	}
-	
-	
+
+	public List<Request> getAllRequests(Employee loggedIn) {
+		if (loggedIn == null || !loggedIn.isFin_man()) {
+			return null;}
+
+		if (edao.getUserByUsername(loggedIn.getUname()) == null) {
+			return null;
+		}
+
+		List<Request> reqs = requestDAO.getAllRequests();
+		return reqs;
+
+
+	}
+
+	public boolean gradeRequest(Grade g) {
+		Request found = requestDAO.getOneRequest(g.getReq_id());
+		System.out.print("Service request returned:" + found);
+		
+		if (found != null && found.getStatus()==2) {
+			Boolean n = requestDAO.gradeRequest(g);
+			System.out.println("service returned bool: "+ n);
+			return n;
+		}
+		
+		
+		return false;
+	}
+
+
 
 
 }

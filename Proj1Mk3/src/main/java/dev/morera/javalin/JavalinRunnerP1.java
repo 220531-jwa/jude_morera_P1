@@ -35,6 +35,10 @@ public class JavalinRunnerP1 {
 			});
 			path("/requests", ()->{
 				post(rc::getRequests);
+				patch(rc::gradeRequest);
+				path ("/manager" ,()->{
+					post(rc::getAllRequests);
+				});
 			});
 			path("/newRequest", ()->{
 				post(rc::newRequest);

@@ -3,6 +3,7 @@ package dev.morera.controllers;
 import java.util.List;
 
 import dev.morera.models.Employee;
+import dev.morera.models.Grade;
 import dev.morera.models.Request;
 import dev.morera.repositories.EmployeeDAO;
 import dev.morera.services.EmployeeService;
@@ -19,15 +20,35 @@ public class RequestController {
 		RequestController.rs = rs;
 	}
 
+	public void getAllRequests(Context ctx) {
+		Employee u = ctx.bodyAsClass(Employee.class); //we will perform manager check in service
+
+
+
+		List<Request> reqs = rs.getAllRequests(u);
+		if (!reqs.isEmpty() && reqs != null) {
+			for (Request q : reqs) {
+				System.out.println(q);
+			}
+			ctx.json(reqs);
+			ctx.status(200);
+		}
+		else {
+			ctx.status(404);
+		}
+	}
+
 	public void getRequests(Context ctx) {
 
 		Employee u = ctx.bodyAsClass(Employee.class);
 
+
+
 		List<Request> reqs = rs.getRequestsByUser(u);
 		if (!reqs.isEmpty() && reqs != null) {
-		for (Request q : reqs) {
-			System.out.println(q);
-		}
+			for (Request q : reqs) {
+				System.out.println(q);
+			}
 			ctx.json(reqs);
 			ctx.status(200);
 		}
@@ -45,8 +66,19 @@ public class RequestController {
 			ctx.status(500);
 		}
 
-		
-		
+
+
 	}
-	
+
+	public void gradeRequest(Context ctx) {
+		Grade g = ctx.bodyAsClass(Grade.class);
+		System.out.println("into request: " + g);
+		if (rs.gradeRequest(g)) {
+			ctx.status(200);
+		}
+		else {
+			ctx.status(404);
+		}
+	}
+
 }
