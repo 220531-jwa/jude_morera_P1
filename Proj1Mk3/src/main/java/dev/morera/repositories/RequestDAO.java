@@ -37,8 +37,11 @@ public class RequestDAO {
 				String justification = rs.getString("justification");
 				int status = rs.getInt("status");
 				
-				return new Request(req_id, requester,grade, grading_scheme,
+				 Request rrr = new Request(req_id, requester,grade, grading_scheme,
 						cost, passing_grade, datetime, location, description, justification, status);
+				rrr.setValue(this.getPercent(rrr.getReq_id()));
+				 
+				return  rrr;
 				
 			}
 			
@@ -78,8 +81,17 @@ public class RequestDAO {
 				String justification = rs.getString("justification");
 				int status = rs.getInt("status");
 				
+				
+				
 				Request re = new Request(req_id, requester,grade, grading_scheme,
 						cost, passing_grade, datetime, location, description, justification, status);
+				
+//				Request rrr = new Request(req_id, requester,grade, grading_scheme,
+//						cost, passing_grade, datetime, location, description, justification, status);
+				re.setValue(this.getPercent(re.getReq_id()));
+				
+				 
+							
 				
 				reqs.add(re);
 			}
@@ -155,6 +167,7 @@ public class RequestDAO {
 				
 				Request re = new Request(req_id, requester,grade, grading_scheme,
 						cost, passing_grade, datetime, location, description, justification, status);
+				re.setValue(this.getPercent(re.getReq_id()));
 				
 				reqs.add(re);
 			}
@@ -207,4 +220,28 @@ public class RequestDAO {
 			}
 			return false;
 	}
+	public double getPercent(int t_id) {
+		String sql = "select reimbursement_percent from project1.req_types where t_id = ?";
+		
+		 try (Connection conn = cu.getConnection()){
+				PreparedStatement ps = conn.prepareStatement(sql);
+				
+				ps.setInt(1, t_id);
+				
+				ResultSet rs = ps.executeQuery();
+				
+				if (rs.next()) {
+					return rs.getDouble("reimbursement_percent");
+				}
+				
+				
+			 }
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return 0;
+		
+	}
+	
+	
 }

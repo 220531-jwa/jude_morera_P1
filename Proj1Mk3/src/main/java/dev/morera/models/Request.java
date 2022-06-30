@@ -3,12 +3,16 @@ package dev.morera.models;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+
+
 public class Request {
+
+
 
 	private int req_id;
 	private String requester;
-//	private String manager;
-//	private boolean is_done;
+	//	private String manager;
+	//	private boolean is_done;
 	private double grade;
 	private int grading_scheme;
 	private double cost;
@@ -18,7 +22,8 @@ public class Request {
 	private String description;
 	private String justification;
 	private int status;
-	
+	private double value;
+
 	public Request() {
 		super();
 	}
@@ -38,10 +43,11 @@ public class Request {
 		this.description = description;
 		this.justification = justification;
 		this.status = status;
+		this.value = 0;
 	}
 
 
-	
+
 	//bad constructor for testing
 	public Request(int req_id, int requester, double grade, int grading_scheme,
 			double cost, double passing_grade, Timestamp datetime, String location, String description,
@@ -49,8 +55,8 @@ public class Request {
 		super();
 		this.req_id = req_id;
 		this.requester = Integer.toString(requester);
-//		this.manager = Integer.toString(manager);
-//		this.is_done = is_done;
+		//		this.manager = Integer.toString(manager);
+		//		this.is_done = is_done;
 		this.grade = grade;
 		this.grading_scheme = grading_scheme;
 		this.cost = cost;
@@ -60,9 +66,27 @@ public class Request {
 		this.description = description;
 		this.justification = justification;
 		this.status = status;
-		
+		this.value = 0;
 	}
-	
+
+
+
+	public double getValue() {
+		return value;
+	}
+
+
+	public void setValue(double multiplier) { //this will need some implementation
+		double setTo = 0;
+
+		if (this.status != 5) {
+			setTo = this.cost * multiplier;
+
+		}
+		this.value = setTo;
+
+	}
+
 
 	public int getReq_id() {
 		return req_id;
@@ -153,16 +177,20 @@ public class Request {
 		this.status = status;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Request [req_id=" + req_id + ", requester=" + requester + ", grade=" + grade + ", grading_scheme="
 				+ grading_scheme + ", cost=" + cost + ", passing_grade=" + passing_grade + ", datetime=" + datetime
 				+ ", location=" + location + ", description=" + description + ", justification=" + justification
-				+ ", status=" + status + "]";
+				+ ", status=" + status + ", value=" + value + "]";
 	}
 
 
 
-	
+
+
+
 
 }

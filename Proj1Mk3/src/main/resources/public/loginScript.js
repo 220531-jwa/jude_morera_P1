@@ -252,7 +252,7 @@ async function login(){
                         // cell4.innerText = entry.is_done;
                         cell3.innerText = entry.grade;
                         cell4.innerText = SetType(entry.grading_scheme);
-                        cell5.innerText = entry.cost;
+                        cell5.innerText = `$${entry.cost.toFixed(2)}`;
                         cell6.innerText = entry.passing_grade;
                         cell7.innerText = new Date(entry.datetime);
                         //let reimbSubmitted = new Date().toISOString().slice(0, 10);
@@ -261,6 +261,9 @@ async function login(){
                         cell9.innerText = entry.description;
                         cell10.innerText = entry.justification;
                         cell11.innerText = entry.status;
+                        cell12.innerText = `$${entry.value.toFixed(2)}`;
+                        // cell12.setAttribute(value, "0.00");
+                        
                         
                         if (entry.status == 1){
                             let newB = document.createElement('option');
@@ -268,7 +271,7 @@ async function login(){
                             newB.innerText = entry.req_id;
                             selector.appendChild(newB);
                         }
-                        
+                        console.log(entry.value);
                         
                     }
                     
@@ -316,7 +319,7 @@ async function login(){
                         var cell9 = row.insertCell(8);
                         var cell10 = row. insertCell(9);
                         var cell11 = row.insertCell(10);
-                        // var cell12 = row.insertCell(11);
+                        var cell12 = row.insertCell(11);
                         
                         
                         //     id</th>
@@ -341,7 +344,7 @@ async function login(){
                         
                         
                         
-                        cell5.innerText = entry.cost;
+                        cell5.innerText = `$${entry.cost.toFixed(2)}`;
                         cell6.innerText = entry.passing_grade;
                         cell7.innerText = new Date(entry.datetime);
                         //let reimbSubmitted = new Date().toISOString().slice(0, 10);
@@ -350,12 +353,12 @@ async function login(){
                         cell9.innerText = entry.description;
                         cell10.innerText = entry.justification;
                         cell11.innerText = entry.status;
+                        cell12.innerText = `$${entry.value.toFixed(2)}`;
                         
-                        
-                            let newB = document.createElement('option');
-                            newB.setAttribute("value",entry.req_id);
-                            newB.innerText = entry.req_id;
-                            selector.appendChild(newB);
+                        let newB = document.createElement('option');
+                        newB.setAttribute("value",entry.req_id);
+                        newB.innerText = entry.req_id;
+                        selector.appendChild(newB);
                         
                         
                     }
@@ -414,7 +417,7 @@ async function login(){
                     req_id :idChanged,
                     grade: gradeChanged
                 }
-
+                
                 let gradString = JSON.stringify(grad);
                 console.log(gradString);
                 
@@ -452,7 +455,7 @@ async function login(){
                     req_id :idChanged,
                     status: statusChanged
                 }
-
+                
                 let statString = JSON.stringify(stat);
                 console.log(statString);
                 
