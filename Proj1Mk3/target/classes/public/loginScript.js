@@ -252,7 +252,7 @@ async function login(){
                         // cell4.innerText = entry.is_done;
                         cell3.innerText = entry.grade;
                         cell4.innerText = SetType(entry.grading_scheme);
-                        cell5.innerText = entry.cost;
+                        cell5.innerText = `$${entry.cost.toFixed(2)}`;
                         cell6.innerText = entry.passing_grade;
                         cell7.innerText = new Date(entry.datetime);
                         //let reimbSubmitted = new Date().toISOString().slice(0, 10);
@@ -344,7 +344,7 @@ async function login(){
                         
                         
                         
-                        cell5.innerText = entry.cost;
+                        cell5.innerText = `$${entry.cost.toFixed(2)}`;
                         cell6.innerText = entry.passing_grade;
                         cell7.innerText = new Date(entry.datetime);
                         //let reimbSubmitted = new Date().toISOString().slice(0, 10);
