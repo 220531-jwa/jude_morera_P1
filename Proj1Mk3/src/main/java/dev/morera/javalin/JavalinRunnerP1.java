@@ -13,7 +13,6 @@ import io.javalin.http.staticfiles.Location;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 
-
 public class JavalinRunnerP1 {
 
 	public static void main(String[] args) {
@@ -21,26 +20,27 @@ public class JavalinRunnerP1 {
 		RequestController rc = new RequestController(new RequestService(new RequestDAO()));
 		Javalin app = Javalin.create(config -> {
 			config.enableCorsForAllOrigins();
-			//	config.enableCorsForOrigin("http://localhost:8081");
+			// config.enableCorsForOrigin("http://localhost:8081");
 			config.addStaticFiles("/public", Location.CLASSPATH);
 		});
 		app.start(8081);
 
-		app.routes(()->{
-			path("/login", () ->{
+		app.routes(() -> {
+			path("/login", () -> {
 				put(ec::loginEmployee);
-				path ("/manager" ,()->{
+				path("/manager", () -> {
 					put(ec::loginManager);
 				});
 			});
-			path("/requests", ()->{
+			path("/requests", () -> {
 				post(rc::getRequests);
 				patch(rc::gradeRequest);
-				path ("/manager" ,()->{
+				path("/manager", () -> {
 					post(rc::getAllRequests);
+					patch(rc::changeStatus);
 				});
 			});
-			path("/newRequest", ()->{
+			path("/newRequest", () -> {
 				post(rc::newRequest);
 			});
 		});

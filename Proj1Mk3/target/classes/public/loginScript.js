@@ -299,6 +299,7 @@ async function login(){
                     // console.log(test); not needed, already an object
                     
                     var table = document.getElementById("TheManagerTable");
+                    var selector = document.getElementById('idSelector');
                     
                     for (const entry of resp){
                         
@@ -350,6 +351,11 @@ async function login(){
                         cell10.innerText = entry.justification;
                         cell11.innerText = entry.status;
                         
+                        
+                            let newB = document.createElement('option');
+                            newB.setAttribute("value",entry.req_id);
+                            newB.innerText = entry.req_id;
+                            selector.appendChild(newB);
                         
                         
                     }
@@ -434,8 +440,41 @@ async function login(){
                     console.log(error);
                 });
             }
-            // let user = {
-            //     uname: uname,
-            //     pword: pword,
-            //     // fin_man: mana
-            // }
+            async function ChangeStatus(){
+                
+                let selector = document.getElementById('idSelector');
+                let statusa = document.getElementById('newStatus');
+                
+                let idChanged = selector.options[selector.selectedIndex].value;
+                let statusChanged = (statusa.value); 
+                
+                let stat = {
+                    req_id :idChanged,
+                    status: statusChanged
+                }
+
+                let statString = JSON.stringify(stat);
+                console.log(statString);
+                
+                
+                
+                let res = await fetch(`
+                ${baseUrl}/requests/manager`,
+                {
+                    method: 'PATCH',
+                    header: {'Content-Type': 'application/json'},
+                    body: statString
+                    
+                }
+                );
+                let resJson = await res.json()
+                
+                .then(()=>{
+                    
+                    console.log("nice");
+                    
+                }) 
+                .catch((error) => {
+                    console.log(error);
+                });
+            }

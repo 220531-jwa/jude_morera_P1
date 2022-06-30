@@ -5,6 +5,7 @@ import java.util.List;
 import dev.morera.models.Employee;
 import dev.morera.models.Grade;
 import dev.morera.models.Request;
+import dev.morera.models.Status;
 import dev.morera.repositories.EmployeeDAO;
 import dev.morera.repositories.RequestDAO;
 
@@ -70,6 +71,17 @@ public class RequestService {
 		}
 		
 		
+		return false;
+	}
+
+	public boolean changeStatus(Status s) {
+		Request found = requestDAO.getOneRequest(s.getReq_id());
+		
+		if (found != null) {
+			Boolean n = requestDAO.changeStatus(s);
+			System.out.println("service returned bool: "+ n);
+			return n;
+		}		
 		return false;
 	}
 

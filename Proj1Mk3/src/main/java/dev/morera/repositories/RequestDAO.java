@@ -7,6 +7,7 @@ import java.util.List;
 
 import dev.morera.models.Grade;
 import dev.morera.models.Request;
+import dev.morera.models.Status;
 import dev.morera.utils.ConnectionUtility;
 
 public class RequestDAO {
@@ -185,5 +186,25 @@ public class RequestDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+
+	public Boolean changeStatus(Status s) {
+		
+		String sql = "update project1.requests set status = ? where req_id = ?";
+		
+		 try (Connection conn = cu.getConnection()){
+				PreparedStatement ps = conn.prepareStatement(sql);
+				
+				ps.setInt(1, s.getStatus());
+				ps.setInt(2, s.getReq_id());
+			 
+				return (ps.executeUpdate()==1);
+				
+			 }
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
 	}
 }

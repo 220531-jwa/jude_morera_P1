@@ -5,6 +5,7 @@ import java.util.List;
 import dev.morera.models.Employee;
 import dev.morera.models.Grade;
 import dev.morera.models.Request;
+import dev.morera.models.Status;
 import dev.morera.repositories.EmployeeDAO;
 import dev.morera.services.EmployeeService;
 import dev.morera.services.RequestService;
@@ -74,6 +75,16 @@ public class RequestController {
 		Grade g = ctx.bodyAsClass(Grade.class);
 		System.out.println("into request: " + g);
 		if (rs.gradeRequest(g)) {
+			ctx.status(200);
+		}
+		else {
+			ctx.status(404);
+		}
+	}
+	
+	public void changeStatus(Context ctx) {
+		Status s = ctx.bodyAsClass(Status.class);
+		if (rs.changeStatus(s)) {
 			ctx.status(200);
 		}
 		else {
