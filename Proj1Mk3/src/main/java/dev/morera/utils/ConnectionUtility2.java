@@ -67,7 +67,7 @@ public class ConnectionUtility2 {
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
-//		
+//		/P1ReimburstReal/src/main/resources/connection.properties
 //	}
 
 }

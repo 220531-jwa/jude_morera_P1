@@ -52,23 +52,23 @@ public class ConnectionUtility {
 		
 	}
 	
-//public static void main(String[] args) {
-//		
-//		Connection connection = getConnectionUtility().getConnection();
-//		
-//		if (connection != null) {
-//			System.out.println("Connection Successful");
-//		} else {
-//			System.out.println("Something went wrong");
-//		}
-//		
-//		try {
-//			connection.close();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//	}
+public static void main(String[] args) {
+		
+		Connection connection = getConnectionUtility().getConnection();
+		
+		if (connection != null) {
+			System.out.println("Connection Successful");
+		} else {
+			System.out.println("Something went wrong");
+		}
+		
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }
 
