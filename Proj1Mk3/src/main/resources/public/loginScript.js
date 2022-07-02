@@ -215,6 +215,7 @@ async function login(){
                     
                     var table = document.getElementById("TheTable");
                     var selector = document.getElementById('idSelector');
+                    let moneytotal = 0.0;
                     for (const entry of resp){
                         
                         var row = table.insertRow(-1);
@@ -232,46 +233,47 @@ async function login(){
                         var cell11 = row.insertCell(10);
                         var cell12 = row.insertCell(11);
                         
-                        
-                        //     id</th>
-                        //     Requester</th>
-                        
-                        //     grade</th>
-                        //     type</th>
-                        //     passing grade</th>
-                        //     date & time of event</th>
-                        //     location</th>
-                        //     description</th>
-                        //     justification</th>
-                        //     status
-                        
-                        
                         cell1.innerText = entry.req_id;
-                        cell2.innerText = entry.requester;
-                        // cell3.innerText = entry.manager;
-                        // cell4.innerText = entry.is_done;
+
+
+                        let foundUserString = JSON.parse(sessionStorage.getItem('inUser'));
+                        cell2.innerText = `${entry.requester} ${foundUserString.name}`;
                         cell3.innerText = entry.grade;
                         cell4.innerText = SetType(entry.grading_scheme);
                         cell5.innerText = `$${entry.cost.toFixed(2)}`;
                         cell6.innerText = entry.passing_grade;
                         cell7.innerText = new Date(entry.datetime);
-                        //let reimbSubmitted = new Date().toISOString().slice(0, 10);
                         
                         cell8.innerText = entry.location;
                         cell9.innerText = entry.description;
                         cell10.innerText = entry.justification;
                         cell11.innerText = entry.status;
-                        cell12.innerText = `$${entry.value.toFixed(2)}`;
-                        // cell12.setAttribute(value, "0.00");
-                        
-                        
+                        let money = entry.value;
+                        {
+                            console.log(`money in:  ${money}`)
+                            console.log(`total: ${moneytotal}`)
+                            if (moneytotal == 1000){
+                                money =0;
+                            }
+                            else if ((moneytotal + money) > 1000){
+                                money -=(1000 - (money + moneytotal));                      
+                            }
+                            else{
+                                money = money;
+                            }
+                           
+                        }
+                        moneytotal += money;
+                        cell12.innerText = `$${money.toFixed(2)}`;
+                       
+                        console.log(money);
                         if (entry.status == 1){
                             let newB = document.createElement('option');
                             newB.setAttribute("value",entry.req_id);
                             newB.innerText = entry.req_id;
                             selector.appendChild(newB);
                         }
-                        console.log(entry.value);
+                        // console.log(entry.value);
                         
                     }
                     
@@ -319,35 +321,16 @@ async function login(){
                         var cell9 = row.insertCell(8);
                         var cell10 = row. insertCell(9);
                         var cell11 = row.insertCell(10);
-                        var cell12 = row.insertCell(11);
-                        
-                        
-                        //     id</th>
-                        //     Requester</th>
-                        
-                        //     grade</th>
-                        //     type</th>
-                        //     passing grade</th>
-                        //     date & time of event</th>
-                        //     location</th>
-                        //     description</th>
-                        //     justification</th>
-                        //     status
-                        
+                        var cell12 = row.insertCell(11);         
                         
                         cell1.innerText = entry.req_id;
-                        cell2.innerText = entry.requester;
-                        // cell3.innerText = entry.manager;
-                        // cell4.innerText = entry.is_done;
+                        cell2.innerText = `${entry.requester} ${entry.requesterName}`;
                         cell3.innerText = entry.grade;
-                        cell4.innerText = SetType(entry.grading_scheme);
-                        
-                        
+                        cell4.innerText = SetType(entry.grading_scheme);               
                         
                         cell5.innerText = `$${entry.cost.toFixed(2)}`;
                         cell6.innerText = entry.passing_grade;
                         cell7.innerText = new Date(entry.datetime);
-                        //let reimbSubmitted = new Date().toISOString().slice(0, 10);
                         
                         cell8.innerText = entry.location;
                         cell9.innerText = entry.description;

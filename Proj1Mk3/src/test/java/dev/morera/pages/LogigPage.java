@@ -24,5 +24,8 @@ public class LogigPage {
 	@FindBy(id = "loginButton")
 	public WebElement loginButton;
 	
+	@FindBy (id = "managerCheckBox")
+	public WebElement managerCheckBox;
+	
 	
 }

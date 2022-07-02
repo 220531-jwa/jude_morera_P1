@@ -17,17 +17,13 @@ public class RequestService {
 		this.requestDAO = rdao;
 	}
 
-	private static EmployeeDAO edao = new EmployeeDAO();
+	public static EmployeeDAO edao = new EmployeeDAO();
 
 	public List<Request> getRequestsByUser (Employee loggedIn){
 
 		if (loggedIn == null) {
 			return null;
 		}
-		//		action = action.replaceAll("[{}\"\r\n ]", "");
-		//String[] splited = action.split(":");
-
-
 
 		Employee x = edao.getUserByUsername(loggedIn.getUname());
 
@@ -53,7 +49,7 @@ public class RequestService {
 		if (edao.getUserByUsername(loggedIn.getUname()) == null) {
 			return null;
 		}
-
+		
 		List<Request> reqs = requestDAO.getAllRequests();
 		return reqs;
 

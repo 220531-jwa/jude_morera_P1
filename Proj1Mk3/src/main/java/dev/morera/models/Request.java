@@ -23,6 +23,7 @@ public class Request {
 	private String justification;
 	private int status;
 	private double value;
+	private String requesterName;
 
 	public Request() {
 		super();
@@ -30,7 +31,7 @@ public class Request {
 
 
 	public Request(int req_id, String requester, double grade, int grading_scheme, double cost, double passing_grade,
-			Timestamp datetime, String location, String description, String justification, int status) {
+			Timestamp datetime, String location, String description, String justification, int status, String requesterName) {
 		super();
 		this.req_id = req_id;
 		this.requester = requester;
@@ -44,14 +45,15 @@ public class Request {
 		this.justification = justification;
 		this.status = status;
 		this.value = 0;
-	}
+		this.requesterName=requesterName;
+		}
 
 
 
 	//bad constructor for testing
 	public Request(int req_id, int requester, double grade, int grading_scheme,
 			double cost, double passing_grade, Timestamp datetime, String location, String description,
-			String justification, int status) {
+			String justification, int status, String requesterName) {
 		super();
 		this.req_id = req_id;
 		this.requester = Integer.toString(requester);
@@ -67,6 +69,7 @@ public class Request {
 		this.justification = justification;
 		this.status = status;
 		this.value = 0;
+		this.requesterName = requesterName;
 	}
 
 
@@ -178,14 +181,27 @@ public class Request {
 	}
 
 
+	public String getRequesterName() {
+		return requesterName;
+	}
+
+
+	public void setRequesterName(String requesterName) {
+		this.requesterName = requesterName;
+	}
+
 
 	@Override
 	public String toString() {
 		return "Request [req_id=" + req_id + ", requester=" + requester + ", grade=" + grade + ", grading_scheme="
 				+ grading_scheme + ", cost=" + cost + ", passing_grade=" + passing_grade + ", datetime=" + datetime
 				+ ", location=" + location + ", description=" + description + ", justification=" + justification
-				+ ", status=" + status + ", value=" + value + "]";
+				+ ", status=" + status + ", value=" + value + ", requesterName=" + requesterName + "]";
 	}
+
+
+
+	
 
 
 

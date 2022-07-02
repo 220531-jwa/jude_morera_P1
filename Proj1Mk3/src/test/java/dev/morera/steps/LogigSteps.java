@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.Duration;
 
+import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebDriver;
 
 import dev.morera.pages.LogigPage;
@@ -24,7 +25,7 @@ public class LogigSteps {
 	
 	
 	
-	
+	@Tag("Cuc")
 	@Given("a Employee is on LogigPage")
 	public void a_employee_is_on_logig_page() {
 	    

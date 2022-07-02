@@ -61,6 +61,12 @@ public class Employee {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "Employee [e_id=" + e_id + ", fin_man=" + fin_man + ", uname=" + uname + ", pword=" + pword + ", name="
+				+ name + "]";
+	}
+
 
 
 }

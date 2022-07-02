@@ -38,7 +38,7 @@ public class RequestDAO {
 				int status = rs.getInt("status");
 				
 				 Request rrr = new Request(req_id, requester,grade, grading_scheme,
-						cost, passing_grade, datetime, location, description, justification, status);
+						cost, passing_grade, datetime, location, description, justification, status, "");
 				rrr.setValue(this.getPercent(rrr.getReq_id()));
 				 
 				return  rrr;
@@ -84,7 +84,7 @@ public class RequestDAO {
 				
 				
 				Request re = new Request(req_id, requester,grade, grading_scheme,
-						cost, passing_grade, datetime, location, description, justification, status);
+						cost, passing_grade, datetime, location, description, justification, status, "");
 				
 //				Request rrr = new Request(req_id, requester,grade, grading_scheme,
 //						cost, passing_grade, datetime, location, description, justification, status);
@@ -138,7 +138,9 @@ public class RequestDAO {
 
 	public List<Request> getAllRequests() {
 		
-		String sql = "select * from project1.requests order by req_id";
+//		String sql = "select * from project1.requests order by req_id";
+		String sql = "select * from project1.employees e, project1.requests r  where e.e_id = r.requester order by r.requester ,r.req_id";
+		
 		
 		try (Connection conn = cu.getConnection()){
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -164,9 +166,10 @@ public class RequestDAO {
 				String description = rs.getString("description");
 				String justification = rs.getString("justification");
 				int status = rs.getInt("status");
+				String name =rs.getString("name");
 				
 				Request re = new Request(req_id, requester,grade, grading_scheme,
-						cost, passing_grade, datetime, location, description, justification, status);
+						cost, passing_grade, datetime, location, description, justification, status,name);
 				re.setValue(this.getPercent(re.getReq_id()));
 				
 				reqs.add(re);

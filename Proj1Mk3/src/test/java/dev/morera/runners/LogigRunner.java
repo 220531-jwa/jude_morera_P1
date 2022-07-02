@@ -1,6 +1,9 @@
 package dev.morera.runners;
 
 import java.io.File;
+
+import org.junit.Ignore;
+import org.junit.jupiter.api.Tag;
 import org.junit.platform.suite.api.Suite;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -10,6 +13,7 @@ import io.cucumber.java.BeforeAll;
 
 
 @Suite
+//@Tag("Cuc")
 public class LogigRunner {
 
 	public static WebDriver driver;
