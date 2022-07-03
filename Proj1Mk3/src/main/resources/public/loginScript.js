@@ -305,11 +305,19 @@ async function login(){
                     
                     var table = document.getElementById("TheManagerTable");
                     var selector = document.getElementById('idSelector');
-                    
+                    var today = new Date()
+                    var todayU = today.getTime();
                     for (const entry of resp){
                         
                         var row = table.insertRow(-1);
+                        console.log(`today:${todayU}`);
+                        console.log(`event:${entry.datetime}`);
                         
+                        let mathedTime=(entry.datetime - todayU);
+                        console.log(`maths:${mathedTime}`);
+                        if (mathedTime<(60 * 60 * 24 * 14 * 1000)){
+                        row.classList.add("highlight");
+                    }
                         var cell1 = row.insertCell(0);
                         var cell2 = row.insertCell(1);
                         var cell3 = row.insertCell(2);
