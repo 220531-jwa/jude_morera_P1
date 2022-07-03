@@ -3,10 +3,12 @@ package dev.morera.controllers;
 import dev.morera.models.Employee;
 import dev.morera.services.EmployeeService;
 import io.javalin.http.Context;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class EmployeeController {
 
-
+	private static Logger log = LogManager.getLogger(EmployeeController.class);
 
 	private static EmployeeService es;
 
@@ -21,8 +23,10 @@ public class EmployeeController {
 
 	public  void loginEmployee(Context ctx){
 		Employee u = ctx.bodyAsClass(Employee.class);
+		log.info("logging in as employee: " + u);
+		
 		Employee loggedIn = es.login(u.getUname(), u.getPword()); 
-		//es.login(u.getUname(), u.getPword());
+		
 
 		if (loggedIn != null) {
 			ctx.json(loggedIn);
@@ -37,6 +41,7 @@ public class EmployeeController {
 
 	public void loginManager(Context ctx) {
 		Employee m = ctx.bodyAsClass(Employee.class);
+		log.info("logging in as manager: " + m);
 		Employee loggedIn = es.loginManager(m.getUname(), m.getPword(), m.isFin_man());
 		if (loggedIn != null) {
 			ctx.json(loggedIn);
@@ -44,6 +49,7 @@ public class EmployeeController {
 		}
 		else {
 			ctx.status(404);
+			
 		}
 
 	}

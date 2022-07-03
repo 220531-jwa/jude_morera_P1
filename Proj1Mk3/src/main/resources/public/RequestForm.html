@@ -12,6 +12,7 @@
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
     crossorigin="anonymous">
     
+    <link rel="stylesheet" href="Stylez.css">
     
 </head>
 
@@ -51,60 +52,64 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <!-- <th scope ="row">
-                            <input id = "e_id" type = "number" min ="0">
-                        </th>
-                        <td >
-                            <input id="name" class="form-control" type="text"
-                            placeholder="Your Name">
-                        </td> -->
-                        
-                        <th scope ="row">
-                            <select class="form-select" id="type">
-                                <!-- <option selected value="0">Choose:</option> -->
-                                <option value="1">University Course</option>
-                                <option value="2">Seminar</option>
-                                <option value="3">Certification Prep. Class</option>
-                                <option value="4">Certification</option>
-                                <option value="5">Technical Training</option>
-                                <option value="6">Other</option>
-                            </select>
-                        </th>
-                        <td>
-                            <input id = "cost" type ="number" min ="0">
-                        </td>
-                        <td>
-                            <span>
-                                <input id = "passing_grade" type ="number" max ="100" accuracy="2" min="0">%
-                            </span>
-                        </td>
-                        <td>
-                            <input id = "datetime" type = "datetime-local">
-                        </td>
-                        <td>
-                            <input id = "location" type="text">
-                        </td>
-                        <td>
-                            <textarea  rows="4" cols="30" id="description" ></textarea>
-                        </td>
-                        <td>
-                            <textarea  rows="4" cols="30" id="justification" ></textarea>
-                        </td>
-                    </tr> 
+                    <form id="formy">
+                        <tr id = "inputRow">
+                            <!-- <th scope ="row">
+                                <input id = "e_id" type = "number" min ="0">
+                            </th>
+                            <td >
+                                <input id="name" class="form-control" type="text"
+                                placeholder="Your Name">
+                            </td> -->
+                            
+                            <th scope ="row">
+                                <select class="form-select" id="type">
+                                    <!-- <option selected value="0">Choose:</option> -->
+                                    <option value="1">University Course</option>
+                                    <option value="2">Seminar</option>
+                                    <option value="3">Certification Prep. Class</option>
+                                    <option value="4">Certification</option>
+                                    <option value="5">Technical Training</option>
+                                    <option value="6">Other</option>
+                                </select>
+                            </th>
+                            <td>
+                                <input id = "cost" type ="number" min ="0" required>
+                            </td>
+                            <td>
+                                <span>
+                                    <input id = "passing_grade" type ="number" max ="100" accuracy="2" min="0" required>%
+                                </span>
+                            </td>
+                            <td>
+                                <input id = "datetime" type = "datetime-local" required>
+                            </td>
+                            <td>
+                                <input id = "location" type="text" required>
+                            </td>
+                            <td>
+                                <textarea  rows="4" cols="30" id="description" required></textarea>
+                            </td>
+                            <td>
+                                <textarea  rows="4" cols="30" id="justification" required></textarea>
+                            </td>
+                        </tr> 
+                    </form>
                 </tbody>
                 
             </table>
-        
-        <button type="button" class="btn btn-primary" onclick="sendRequest()">submit
-            request</button>
-        <!-- </form> -->
             
-            <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-            crossorigin="anonymous">
-        </script>
-        <script src="./loginScript.js"></script>
-    </body>
-    </html>
+            <button type="button" class="btn btn-primary" onclick="sendRequest()">submit
+                request</button>
+                <div id="feedbacks">
+                </div>
+                <!-- </form> -->
+                
+                <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+                crossorigin="anonymous">
+            </script>
+            <script src="./loginScript.js"></script>
+        </body>
+        </html>

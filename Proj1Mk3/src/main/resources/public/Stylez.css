@@ -1,4 +1,26 @@
-.highlight{ color:rgb(68, 23, 190) ;
+
+body{
+    margin: 10px;
+}
+
+.highlightUrgent{ color:rgb(68, 23, 190); 
     font-weight: bolder;
 
 }
+.highlightOld{color: red;
+    font-style: italic;
+    text-decoration: line-through;
+}
+
+.default{ color:black}
+
+input:invalid {
+    background-color: #ffdddd;
+  }
+
+  textarea:invalid{
+    background-color: #ffdddd;
+  }
+  .buttons label  {
+    margin:5px
+  }

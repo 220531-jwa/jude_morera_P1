@@ -2,6 +2,9 @@ package dev.morera.controllers;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import dev.morera.models.Employee;
 import dev.morera.models.Grade;
 import dev.morera.models.Request;
@@ -16,6 +19,7 @@ public class RequestController {
 	private static RequestService rs;
 	//private static EmployeeService es = new EmployeeService(new EmployeeDAO());
 
+	private static Logger log = LogManager.getLogger(RequestController.class);
 
 	public RequestController(RequestService rs) {
 		RequestController.rs = rs;
@@ -23,10 +27,14 @@ public class RequestController {
 
 	public void getAllRequests(Context ctx) {
 		Employee u = ctx.bodyAsClass(Employee.class); //we will perform manager check in service
-
+		
 
 
 		List<Request> reqs = rs.getAllRequests(u);
+		
+		log.info("Output requests: " + reqs);
+//		log.info("test");
+		
 		if (!reqs.isEmpty() && reqs != null) {
 			for (Request q : reqs) {
 				System.out.println(q);
@@ -47,6 +55,9 @@ public class RequestController {
 
 
 		List<Request> reqs = rs.getRequestsByUser(u);
+		
+		log.info("Output requests: " + reqs);
+		
 		if (!reqs.isEmpty() && reqs != null) {
 			for (Request q : reqs) {
 				System.out.println(q);
@@ -61,6 +72,9 @@ public class RequestController {
 
 	public void newRequest(Context ctx) {		
 		Request r = ctx.bodyAsClass(Request.class);
+		
+		log.info("input request: " + r);
+		
 		if(rs.createNewRequest(r)) {
 			ctx.status(200);
 		}
@@ -74,6 +88,9 @@ public class RequestController {
 
 	public void gradeRequest(Context ctx) {
 		Grade g = ctx.bodyAsClass(Grade.class);
+		
+		log.info("input updated request (grade): " + g);
+		
 		System.out.println("into request: " + g);
 		if (rs.gradeRequest(g)) {
 			ctx.status(200);
@@ -85,6 +102,9 @@ public class RequestController {
 	
 	public void changeStatus(Context ctx) {
 		Status s = ctx.bodyAsClass(Status.class);
+		
+		log.info("input updated reques (status)t: " + s);
+		
 		if (rs.changeStatus(s)) {
 			ctx.status(200);
 		}

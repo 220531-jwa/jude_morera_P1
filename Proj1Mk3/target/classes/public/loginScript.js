@@ -114,7 +114,12 @@ async function login(){
             let type = typeSelect.options[typeSelect.selectedIndex].value;
             
             let cost = document.getElementById("cost").value;
+            
+            //TODO: make this math server side (service layer)??????????????????????????????????????
             let passing_grade =(document.getElementById("passing_grade").value/100);
+            if (passing_grade > 1){
+                passing_grade =0;
+            }
             
             let datetime = document.getElementById("datetime").value
             
@@ -124,6 +129,74 @@ async function login(){
             
             // console.log(`${type}, ${cost}, ${passing_grade}, ${datetime}, ${location}, ${description}, ${justification}`);
             
+            //INPUT VALIDATION
+            let okay = true;
+            let feedbackBox = document.getElementById("feedbacks");
+            feedbackBox.innerHTML = '';
+            
+            if (ValidateInput( document.getElementById("cost"))===false){
+                okay = false;
+                
+                let help = document.createElement('p');
+                help.innerText = "invalid cost";
+                feedbackBox.appendChild(help);
+            }
+            
+            if (ValidateInput( document.getElementById("passing_grade"))===false){
+                okay = false;
+                
+                let help = document.createElement('p');
+                help.innerText = "invalid grade";
+                feedbackBox.appendChild(help);      
+            }
+            
+            if (ValidateInput( document.getElementById("datetime"))===false){
+                okay = false;
+                
+                let help = document.createElement('p');
+                help.innerText = "invalid date";
+                feedbackBox.appendChild(help);      
+            }
+            let today = new Date()
+            let todayU = today.valueOf();
+            let innerDate = new Date(datetime).getTime();
+            console.log(`input date ${innerDate }`);
+            console.log(`today ${todayU}`);
+            if (innerDate < todayU){
+                okay = false;
+                
+                let help = document.createElement('p');
+                help.innerText = "temporal anomaly detected!!!";
+                feedbackBox.appendChild(help);  
+            }
+            
+            
+            if (ValidateInput( document.getElementById("location"))===false){
+                okay = false;
+                
+                let help = document.createElement('p');
+                help.innerText = "invalid location";
+                feedbackBox.appendChild(help);      
+            }
+            
+            if (ValidateInput( document.getElementById("description"))===false){
+                okay = false;
+                
+                let help = document.createElement('p');
+                help.innerText = "invalid description";
+                feedbackBox.appendChild(help);      
+            }
+            
+            if (ValidateInput( document.getElementById("justification"))===false){
+                okay = false;
+                
+                let help = document.createElement('p');
+                help.innerText = "invalid justification";
+                feedbackBox.appendChild(help);      
+            }
+            
+            
+            if (okay === false){return}; //if at least input is bad, entire send-request is canceled here
             let foundUser = JSON.parse(sessionStorage.getItem('inUser'));
             
             let req = {
@@ -154,7 +227,8 @@ async function login(){
                     if (res.status === 200){
                         // console.log(resp);
                         // console.log("SHUTUP");
-                        
+                        let frm = document.getElementById("formy");
+                        formy.reset();
                         
                         
                         
@@ -192,7 +266,11 @@ async function login(){
                 
             }
             
-            
+            function ValidateInput(inputElement){
+                let booly = inputElement.validity.valid ;
+                console.log(booly);
+                return booly;
+            }
             
             async function PopulateTable(){
                 let foundUser = (sessionStorage.getItem('inUser')); 
@@ -216,9 +294,13 @@ async function login(){
                     var table = document.getElementById("TheTable");
                     var selector = document.getElementById('idSelector');
                     let moneytotal = 0.0;
+                    let today = new Date()
+                    let todayU = today.getTime();
                     for (const entry of resp){
                         
                         var row = table.insertRow(-1);
+                        
+                        row.classList.add(ChangeColor(todayU,entry));
                         
                         var cell1 = row.insertCell(0);
                         var cell2 = row.insertCell(1);
@@ -234,8 +316,8 @@ async function login(){
                         var cell12 = row.insertCell(11);
                         
                         cell1.innerText = entry.req_id;
-
-
+                        
+                        
                         let foundUserString = JSON.parse(sessionStorage.getItem('inUser'));
                         cell2.innerText = `${entry.requester} ${foundUserString.name}`;
                         cell3.innerText = entry.grade;
@@ -261,11 +343,11 @@ async function login(){
                             else{
                                 money = money;
                             }
-                           
+                            
                         }
                         moneytotal += money;
                         cell12.innerText = `$${money.toFixed(2)}`;
-                       
+                        
                         console.log(money);
                         if (entry.status == 1){
                             let newB = document.createElement('option');
@@ -284,6 +366,21 @@ async function login(){
                 
             }
             
+            function ChangeColor(todayU, entry){
+                let mathedTime=(entry.datetime - todayU);
+                // console.log(`maths:${mathedTime}`);
+                if ((entry.status == 5) || (entry.datetime < todayU)){
+                    return "highlightOld";
+                }
+                else if (mathedTime<(60 * 60 * 24 * 14 * 1000)){
+                    
+                    return "highlightUrgent";
+                }
+                else {return "default";}
+                // console.log(`today:${todayU}`);
+                // console.log(`event:${entry.datetime}`);
+                // console.log(`maths:${mathedTime}`);
+            }
             async function PopulateTableManagerial(){
                 let foundUser = (sessionStorage.getItem('inUser')); 
                 
@@ -305,10 +402,24 @@ async function login(){
                     
                     var table = document.getElementById("TheManagerTable");
                     var selector = document.getElementById('idSelector');
-                    
+                    let today = new Date()
+                    let todayU = today.getTime();
                     for (const entry of resp){
                         
                         var row = table.insertRow(-1);
+                        
+                        
+                        // let mathedTime=(entry.datetime - todayU);
+                        
+                        // if ((entry.status == 5) || (entry.datetime < todayU)){
+                        //     row.classList.add("highlightOld");
+                        // }
+                        // if (mathedTime<(60 * 60 * 24 * 14 * 1000)){
+                        
+                        //     row.classList.add("highlightUrgent");
+                        // }
+                        let color =  ChangeColor(todayU,entry);
+                        row.classList.add(color);
                         
                         var cell1 = row.insertCell(0);
                         var cell2 = row.insertCell(1);
@@ -324,7 +435,7 @@ async function login(){
                         var cell12 = row.insertCell(11);         
                         
                         cell1.innerText = entry.req_id;
-                        cell2.innerText = `${entry.requester} ${entry.name}`;
+                        cell2.innerText = `${entry.requester} ${entry.requesterName}`;
                         cell3.innerText = entry.grade;
                         cell4.innerText = SetType(entry.grading_scheme);               
                         
