@@ -37,7 +37,7 @@ public class RequestController {
 		
 		if (!reqs.isEmpty() && reqs != null) {
 			for (Request q : reqs) {
-				System.out.println(q);
+//				System.out.println(q);
 			}
 			ctx.json(reqs);
 			ctx.status(200);
@@ -60,7 +60,7 @@ public class RequestController {
 		
 		if (!reqs.isEmpty() && reqs != null) {
 			for (Request q : reqs) {
-				System.out.println(q);
+//				System.out.println(q);
 			}
 			ctx.json(reqs);
 			ctx.status(200);
@@ -76,10 +76,10 @@ public class RequestController {
 		log.info("input request: " + r);
 		
 		if(rs.createNewRequest(r)) {
-			ctx.status(200);
+			ctx.status(201);
 		}
 		else {
-			ctx.status(500);
+			ctx.status(400);
 		}
 
 
@@ -91,7 +91,7 @@ public class RequestController {
 		
 		log.info("input updated request (grade): " + g);
 		
-		System.out.println("into request: " + g);
+//		System.out.println("into request: " + g);
 		if (rs.gradeRequest(g)) {
 			ctx.status(200);
 		}

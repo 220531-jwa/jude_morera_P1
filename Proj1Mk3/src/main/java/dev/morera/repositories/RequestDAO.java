@@ -88,8 +88,9 @@ public class RequestDAO {
 				
 //				Request rrr = new Request(req_id, requester,grade, grading_scheme,
 //						cost, passing_grade, datetime, location, description, justification, status);
-				re.setValue(this.getPercent(re.getReq_id()));
-				
+				double perc =this.getPercent(re.getGrading_scheme());
+				re.setValue(perc);
+				System.out.println("req id" +req_id +"base cost: " +cost+"\npercent: "+perc+ "\nbase*perc:" + re.getValue());
 				 
 							
 				
@@ -170,8 +171,9 @@ public class RequestDAO {
 				
 				Request re = new Request(req_id, requester,grade, grading_scheme,
 						cost, passing_grade, datetime, location, description, justification, status,name);
-				re.setValue(this.getPercent(re.getReq_id()));
-				
+				double perc =this.getPercent(re.getGrading_scheme());
+				re.setValue(perc);
+				System.out.println("base cost: " +cost+"\npercent: "+perc+ "\nbase*perc:" + re.getValue());
 				reqs.add(re);
 			}
 			return reqs;
@@ -194,8 +196,9 @@ public class RequestDAO {
 			
 			ps.setDouble(1, g.getGrade());
 			ps.setInt(2, g.getReq_id());
-		 
-			return (ps.executeUpdate()==1);
+		 int x = ps.executeUpdate();
+		 System.out.println(x);
+			return (x==1);
 			
 		 }
 		catch (SQLException e) {
@@ -230,11 +233,13 @@ public class RequestDAO {
 				PreparedStatement ps = conn.prepareStatement(sql);
 				
 				ps.setInt(1, t_id);
-				
+				System.out.println(ps);
 				ResultSet rs = ps.executeQuery();
 				
 				if (rs.next()) {
+					System.out.println("ACTUAL RETURNED PERCENT:" + rs.getDouble("reimbursement_percent"));
 					return rs.getDouble("reimbursement_percent");
+					
 				}
 				
 				

@@ -35,7 +35,7 @@ public class RequestService {
 	}
 
 	public boolean createNewRequest(Request r) {
-		System.out.println(r);
+//		System.out.println(r);
 		return (requestDAO.createNewRequest(r));
 
 
@@ -62,7 +62,7 @@ public class RequestService {
 		
 		if (found != null && found.getStatus()==2) {
 			Boolean n = requestDAO.gradeRequest(g);
-			System.out.println("service returned bool: "+ n);
+//			System.out.println("service returned bool: "+ n);
 			return n;
 		}
 		
@@ -75,7 +75,7 @@ public class RequestService {
 		
 		if (found != null) {
 			Boolean n = requestDAO.changeStatus(s);
-			System.out.println("service returned bool: "+ n);
+//			System.out.println("service returned bool: "+ n);
 			return n;
 		}		
 		return false;

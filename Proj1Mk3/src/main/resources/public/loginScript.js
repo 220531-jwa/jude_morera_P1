@@ -247,16 +247,16 @@ async function login(){
                     method: 'POST',
                     header: {'Content-Type': 'application/json'},
                     body: reqJSON
-                });
+                })
                 
-                let resJson = await res.json()
-                .then((resp)=>{
+                // let resJson = await res.json()
+                .then((res)=>{
                     console.log("made it to then");
                     if (res.status === 200){
                         // console.log(resp);
                         // console.log("SHUTUP");
                         let frm = document.getElementById("formy");
-                        formy.reset();
+                        window.location.reload();
                         
                         
                         
@@ -359,14 +359,18 @@ async function login(){
                         cell10.innerText = entry.justification;
                         cell11.innerText = entry.status;
                         let money = entry.value;
-                        {
+                        {   console.log(`request number ${entry.req_id}`)
                             console.log(`money in:  ${money}`)
-                            console.log(`total: ${moneytotal}`)
-                            if (moneytotal == 1000){
+                            console.log(` running total before calc: ${moneytotal}`)
+                            if (moneytotal == 1000 || row.classList.contains("highlightOld")){
                                 money =0;
                             }
                             else if ((moneytotal + money) > 1000){
-                                money -=(1000 - (money + moneytotal));                      
+
+                                console.log(`subtracting 1000 ${money} + ${moneytotal}`);
+
+                                money +=(1000 - (money + moneytotal)); 
+                                                     
                             }
                             else{
                                 money = money;
@@ -375,13 +379,19 @@ async function login(){
                         }
                         moneytotal += money;
                         cell12.innerText = `$${money.toFixed(2)}`;
+                        console.log(` running after before calc: ${moneytotal}`)
                         
-                        console.log(money);
-                        if (entry.status == 1){
+                        // console.log(money);
+                        if (entry.status == 2){
                             let newB = document.createElement('option');
                             newB.setAttribute("value",entry.req_id);
                             newB.innerText = entry.req_id;
                             selector.appendChild(newB);
+                        }
+                        // console.log(`element count: ${selector.childElementCount}`);
+                        if (selector.childElementCount==0){
+                           let button = document.getElementById("gradeButton");
+                           button.setAttribute("disabled", true);
                         }
                         // console.log(entry.value);
                         
@@ -557,7 +567,7 @@ async function login(){
                 let resJson = await res.json()
                 
                 .then(()=>{
-                    
+                    window.location.reload();  
                     console.log("nice");
                     
                 }) 
@@ -591,12 +601,11 @@ async function login(){
                     body: statString
                     
                 }
-                );
-                let resJson = await res.json()
+                )
+                // let resJson = await res.json()
                 
                 .then(()=>{
-                    
-                    console.log("nice");
+                    window.location.reload();
                     
                 }) 
                 .catch((error) => {
