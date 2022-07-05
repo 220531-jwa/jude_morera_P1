@@ -601,12 +601,11 @@ async function login(){
                     body: statString
                     
                 }
-                );
-                let resJson = await res.json()
+                )
+                // let resJson = await res.json()
                 
                 .then(()=>{
-                    
-                    console.log("nice");
+                    window.location.reload();
                     
                 }) 
                 .catch((error) => {
