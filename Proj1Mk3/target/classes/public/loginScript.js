@@ -252,15 +252,15 @@ async function login(){
                 // let resJson = await res.json()
                 .then((res)=>{
                     console.log("made it to then");
-                    if (res.status === 200){
+                    // if (res.status === 201){
                         // console.log(resp);
                         // console.log("SHUTUP");
-                        let frm = document.getElementById("formy");
+                        // let frm = document.getElementById("formy");
                         window.location.reload();
                         
                         
                         
-                    }
+                    // }
                 }) 
                 //^ where we will put needed DOM manip
                 

@@ -33,7 +33,7 @@ public class RequestServiceTest {
 	
 	@BeforeEach
 	public void setupEach() {
-		rServ = new RequestService(rDaoMock,eDaoMock);
+		rServ = new RequestService(rDaoMock);
 		
 	}
 	

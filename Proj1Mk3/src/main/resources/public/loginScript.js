@@ -389,10 +389,10 @@ async function login(){
                             selector.appendChild(newB);
                         }
                         // console.log(`element count: ${selector.childElementCount}`);
-                        if (selector.childElementCount==0){
-                           let button = document.getElementById("gradeButton");
-                           button.setAttribute("disabled", true);
-                        }
+                        // if (selector.childElementCount==0){
+                        //    let button = document.getElementById("gradeButton");
+                        //    button.setAttribute("disabled", true);
+                        // }
                         // console.log(entry.value);
                         
                     }
